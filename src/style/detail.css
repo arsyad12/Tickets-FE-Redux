@@ -1,0 +1,66 @@
+.h3-detail{
+    color: #14142B;
+}
+
+.hr-detail{
+    width: 100%;
+   margin-left: 0px !important;
+}
+
+.span-detail{
+    color: #8692A6;
+    font-size: 14px;
+}
+
+.genre-detail{
+    color: #4E4B66;
+}
+
+.synopsis-detail{
+    text-align: justify;
+    font-size: 15px;
+    color: #4E4B66;
+}
+
+.p-address{
+        display: -webkit-box;
+        max-width: 200px;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    
+}
+
+.btn-active{
+    background-color: #5F2EEA;
+    width: 100%;
+    color: white;
+    border-radius: 5px;
+    outline: #5F2EEA ;
+
+
+  }
+
+  .btn-active:hover{
+    background-color: #5F2EEA;
+    outline: #5F2EEA;
+
+  }
+
+  .btn-disable{
+    background-color: rgb(94, 94, 94);
+    outline: rgb(94, 94, 94);
+    width: 100%;
+    color: white;
+    border-radius: 5px;
+
+  }
+
+  .btn-disable:hover{
+    background-color: rgb(65, 65, 65);
+    outline: rgb(94, 94, 94);
+    width: 100%;
+    color: white;
+    border-radius: 5px;
+
+  }

@@ -1,0 +1,66 @@
+.signup-img{
+background-image: url('/public/img/signin/signup.png');
+height: 1024px;
+background-size: cover;
+}
+.signup-img-mobile{
+    background-image: url('/public/img/signin/signup.png');
+    height:40vh;
+    background-size: cover;
+
+}
+.p-signup{
+   font-size: 38px;
+   margin-bottom: 0px !important;
+}
+
+.note-signup{
+    font-size: 18px;
+}
+
+.mute-signup{
+    color: #AAAAAA;
+}
+
+.form-signup{
+    margin-top: 80px;
+}
+
+.btn-signup{
+    width: 100%;
+    background-color: #5F2EEA;
+    outline-color: #5F2EEA;
+    color: white;
+}
+
+.btn-signup:hover{
+    background-color: #5F2EEA;
+    color: white;
+}
+
+.text-signin{
+    color: #5F2EEA;
+}
+
+.logo-white{
+height: 190px;
+margin-top: 380px;
+margin-bottom: 0px;
+}
+
+.logo-white-mobile{
+    height: 50px;
+    margin-top: 90px;
+    margin-bottom: 0px;
+}
+    
+
+.moto{
+    font-size: 48px;
+    color: white;    
+}
+
+.moto-mobile{
+    font-size: 28px;
+    color: white;    
+}

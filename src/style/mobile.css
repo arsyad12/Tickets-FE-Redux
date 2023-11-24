@@ -1,0 +1,86 @@
+@media only screen and (min-width: 200px) and (max-width: 400px) {
+.d-dekstop{
+    visibility: hidden;
+    display: none;
+}
+
+.d-mobile{
+    visibility: visible;
+    display: inherit;
+}
+
+.logo{
+    font-size: 200px;
+}
+
+/* nav mobile */
+.burger{
+    padding: 5px;
+}
+
+.btn-burger{
+    outline-color: #5F2EEA;
+}
+
+.navbar-toggler{
+    border-color: white;
+    
+}
+
+.navbar-toggler:focus{
+    box-shadow: none;
+
+}
+
+/* end nav mobile */
+
+
+.poster-nowshowing-mobile{
+    overflow: scroll;
+    margin-top: -150px;
+}
+
+.poster-nowshowing-mobile::-webkit-scrollbar{
+    display: none;
+}
+
+
+.month-btn{
+    overflow: scroll;
+    margin-top: -150px;
+}
+
+
+.month-btn::-webkit-scrollbar{
+    display: none;
+}
+
+
+.poster-upcoming-mobile{
+    overflow: scroll;
+    margin-top: -150px;
+}
+
+
+.poster-upcoming-mobile::-webkit-scrollbar{
+    display: none;
+}
+
+}
+
+
+.h6-name-poster{
+    margin-top: 15px;
+    display: -webkit-box;
+    max-width: 200px;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+/* 
+.size-img{
+    width: 150px;
+    height: 220px;
+} */
+
+

@@ -1,0 +1,193 @@
+a{
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+}
+
+
+#home{
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+}
+
+#list{
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+}
+
+
+#signup{
+    background-color: #5f2eea;
+    height: 40px;
+    width: 140px;
+    margin-top: 5px;
+    border-color: #5F2EEA;
+}
+
+#signup:hover{
+    background-color: #5F2EEA;
+}
+
+/* Main section */
+.mute-text {
+    color: #A0A3BD;
+}
+
+.h1{
+    color: #5F2EEA ;
+}
+
+.main-poster{
+    padding-left: 150px;
+}
+
+
+/* end of Main section */
+
+/* now showing */
+.nowshowing{
+    color: #5F2EEA;
+    margin-top: 50px;
+    font-size: 20px;
+}
+
+hr{
+    border: 1px solid #5F2EEA  ;
+    width: 8%;
+    margin-left: 14px;
+}
+
+#nowshowing{
+    background-color: #F5F6F8;
+}
+
+.card-nowshowing{
+    background-color:#F5F6F8;
+    border-color: white;
+}
+
+
+/* end of now showing */
+
+
+#poster{
+  margin-bottom: 100px;
+}
+
+#poster:hover{
+    animation: pulse; /* referring directly to the animation's @keyframe declaration */
+    animation-duration: 2s; /* don't forget to set a duration! */
+    cursor: pointer;
+    
+}
+
+.upcoming{
+    color: #5F2EEA;
+    font-size: 20px;
+}
+
+/* upcoming*/
+#month{
+    width: 100%;
+    margin-right: 9px;
+    border-color: #5F2EEA !important;
+    outline-color: #5F2EEA !important;
+    color:#5F2EEA;
+
+}
+
+#month:hover{
+    background-color: #5F2EEA;
+    color:white;
+  
+}
+
+#details{
+    border-color: #5F2EEA !important;
+    outline-color: #5F2EEA !important;
+    color:#5F2EEA;
+
+}
+
+#details:hover{
+    background-color: #5F2EEA;
+    color:white;
+  
+}
+
+
+.h6-name-poster{
+    margin-top: 15px;
+    display: -webkit-box;
+    max-width: 200px;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.size-img-poster{
+    width: 185px;
+    height: 250px
+}
+
+.size-img-upcoming{
+    width: 185px;
+    height: 250px;;
+}
+
+/* end of upcoming */
+
+
+/* CTA */
+
+h2{
+    color: #5F2EEA;
+}
+
+
+.form-control{
+width: 100% ;
+}
+
+
+
+
+.d-mobile{
+    visibility: hidden;
+    display: none;
+}
+
+
+
+.join{
+    background-color: #5f2eea;
+    height: 40px;
+    width: 100px;
+    border-color: #5F2EEA;
+}
+
+.join:hover{
+    background-color: #5F2EEA;
+}
+
+
+.btn-primary{
+    color: #F5F6F8 !important;
+    background-color: #5F2EEA;
+
+}
+
+.mt-10{
+    margin-top: 50vh;
+}
+
+.padding-spinner{
+    padding-top: 160px;
+}
+
+.btn-poster{
+    padding-left: 40px;
+    padding-right: 40px;
+}

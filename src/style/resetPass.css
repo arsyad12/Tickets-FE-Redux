@@ -1,0 +1,68 @@
+.resetPass-img{
+    background-image: url('/public/img/signin/signup.png');
+    height: 1024px;
+    background-size: cover;
+    
+    }
+
+    .resetPass-img-mobile{
+        background-image: url('/public/img/signin/signup.png');
+        height: 50vh;
+        background-size: cover;
+        
+        }
+
+    .p-resetPass{
+       font-size: 38px;
+       margin-bottom: 0px !important;
+       color: black;
+    }
+    
+    .note-resetPass{
+        font-size: 18px;
+    }
+    
+    .mute-resetPass{
+        color: #AAAAAA;
+    }
+    
+    .form-resetPass{
+        margin-top: 280px;
+    }
+
+    .form-resetPass-mobile{
+        margin-top: 50px;
+    }
+
+    .form-resetPass-mobile{
+        margin-top: 50px;
+    }
+    
+    .btn-resetPass{
+        width: 100%;
+        background-color: #5F2EEA;
+        outline-color: #5F2EEA;
+        color: white;
+    }
+    
+    .btn-resetPass:hover{
+        background-color: #5F2EEA;
+        color: white;
+    }
+    
+    .text-resetPass{
+        color: #5F2EEA;
+    }
+    
+    .logo-white{
+    height: 190px;
+    margin-top: 380px;
+    margin-bottom: 0px;
+    }
+
+    
+    
+    .moto{
+        font-size: 48px;
+        color: white;    
+    }

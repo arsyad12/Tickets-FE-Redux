@@ -1,0 +1,30 @@
+
+.pt-row{
+    padding-top: 40px;
+}
+
+.container-color{
+    background-color: #F5F6F8;
+}
+
+.btn-cm{
+    background-color: #EFF0F6;
+    color: #5F2EEA;
+    border-radius: 8px;
+    border-color: #FAFCFC00;
+    width: 100%;
+}
+
+.btn-cm:hover{
+    background-color:#5F2EEA ;
+    border-color: #FAFCFC00;
+
+}
+
+.p-title {
+    display: -webkit-box;
+    max-width: 200px;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
