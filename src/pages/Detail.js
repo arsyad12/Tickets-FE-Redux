@@ -9,51 +9,57 @@ import { useSelector,useDispatch } from "react-redux";
 
 
 function Detail() {
-
+  const navigate = useNavigate();
+  const { slug } = useParams(); //request parameter
+  // const [detailMovie, setdetailMovie] = React.useState(null);
+  // const [cinemaMovie, setCinemaMovie] = React.useState([]);
   const state = useSelector((state)=>state)
-  console.log(state)
 
   const dispatch = useDispatch()
 
   const{movie:{detailMovie,cinemaMovie}} = state
 
 
-  // console.log(detailMovie)
-  // console.log(cinemaMovie)
+  const findMovie = detailMovie.find((item) => item.slug === slug) ?? []
+  const listCinema = cinemaMovie[slug] ?? []
 
-  const navigate = useNavigate();
-  const { slug } = useParams(); //request parameter
-  // const [detailMovie, setdetailMovie] = React.useState(null);
-  // const [cinemaMovie, setCinemaMovie] = React.useState([]);
 
   const [dateMovie, setDateMovie] = useState(null);
   const [timeMovie, setTimeMovie] = useState(null);
 
   const responseHandler = async () => {
     try {
-      const detailMovieAPI = await axios.get(
-        `https://tickitz-be.onrender.com/arsyad/movie/detail/${slug}`
-      ); //get data API dari axios
-      //jika ada data yang didapet dari API maka akan masuk ke response
-      if (detailMovieAPI.data.data.length > 0) {
 
-      // console.log(detailMovieAPI.data.data[0])
-
-        dispatch(movieSlices.setDetailMovie(detailMovieAPI.data.data[0]))
-
-        // setdetailMovie(detailMovieAPI.data.data[0]); //setdetailMovie berfungsi untuk memasukan data dari response ke variabel detailMovie
-        //kita ga pake conditional lagi untuk mencocokan slug karena sudah ada dari API nya
+      if (findMovie.length === 0) {
+        const detailMovieAPI = await axios.get(
+          `https://tickitz-be.onrender.com/arsyad/movie/detail/${slug}`
+        ); //get data API dari axios
+        //jika ada data yang didapet dari API maka akan masuk ke response
+        if (detailMovieAPI.data.data.length > 0) {
+  
+        // console.log(detailMovieAPI.data.data[0])
+  
+          dispatch(movieSlices.setDetailMovie(detailMovieAPI.data.data))
+  
+          // setdetailMovie(detailMovieAPI.data.data[0]); //setdetailMovie berfungsi untuk memasukan data dari response ke variabel detailMovie
+          //kita ga pake conditional lagi untuk mencocokan slug karena sudah ada dari API nya
+        }
       }
+
+    if (listCinema.length===0) {
       const cinemaAPI = await axios.get(
         `https://tickitz-be.onrender.com/arsyad/movie/${slug}/cinemas`
       ); //get data API dari axios
       //jika ada data yang didapet dari API maka akan masuk ke response
       if (cinemaAPI.data.data.length > 0) {
-        dispatch(movieSlices.setCinemaMovie(cinemaAPI.data.data))
+        dispatch(movieSlices.setCinemaMovie({
+          movieName : slug,
+          data : cinemaAPI.data.data
+        }))
         // setCinemaMovie(cinemaAPI.data.data); //setCinemaMovie berfungsi untuk memasukan data dari response ke variabel cinemaMovie
       }
-      // console.log(detailMovie)
-      // console.log(cinemaMovie);
+    }
+     
     } catch (error) {
       console.log(error);
     }
@@ -70,7 +76,7 @@ function Detail() {
       <Header />
 
       <div className="container mt-5 d-dekstop">
-        {detailMovie === null ? (
+        {findMovie === null ? (
           <div className="text-center padding-spinner ">
             <div className="spinner-border" role="status">
               <br />
@@ -81,19 +87,19 @@ function Detail() {
           </div>
         ) : null}
 
-        {detailMovie != null ? (
+        {findMovie != null ? (
           <div className="row">
             <div className="col-3">
               <div className="card card-body">
-                <img className="p-3" src={detailMovie.poster} alt="" />
+                <img className="p-3" src={findMovie.poster} alt="" />
               </div>
             </div>
             <div className="col-9 px-5">
-              <h3 className="mb-2 h3-detail">{detailMovie.title}</h3>
+              <h3 className="mb-2 h3-detail">{findMovie.title}</h3>
               <span className="genre" style={{ textTransform: "capitalize" }}>
                 {detailMovie?.genres?.map((item, key) => (
                   <span>
-                    {detailMovie.genres.length - 1 === key ? item : `${item}, `}
+                    {findMovie.genres.length - 1 === key ? item : `${item}, `}
                   </span>
                 ))}
               </span>
@@ -101,25 +107,25 @@ function Detail() {
               <div className="row mt-5">
                 <div className="col-6">
                   <span className="span-detail">Release date</span>
-                  <p>{detailMovie.release}</p>
+                  <p>{findMovie.release}</p>
                 </div>
                 <div className="col-6 mt-1">
                   <span className="span-detail">Directed by</span>
-                  <p>{detailMovie.director}</p>
+                  <p>{findMovie.director}</p>
                 </div>
               </div>
 
               <div className="row mt-3">
                 <div className="col-6">
                   <span className="span-detail">Duration</span>
-                  <p>{detailMovie.duration}</p>
+                  <p>{findMovie.duration}</p>
                 </div>
                 <div className="col-6 mt-1">
                   <span className="span-detail">Cast</span>
                   <p className="genre">
                     {detailMovie?.cast?.map((item, key) => (
                       <span>
-                        {detailMovie.cast.length - 1 === key
+                        {findMovie.cast.length - 1 === key
                           ? item
                           : `${item}, `}
                       </span>
@@ -137,7 +143,7 @@ function Detail() {
               <div className="row mt-2 mb-5">
                 <div className="col-12">
                   <h6>Synopsis</h6>
-                  <p className="synopsis-detail">{detailMovie.desc}</p>
+                  <p className="synopsis-detail">{findMovie.desc}</p>
                 </div>
               </div>
             </div>
@@ -146,7 +152,7 @@ function Detail() {
       </div>
 
       <div className="container mt-5 d-mobile">
-        {detailMovie === null ? (
+        {findMovie === null ? (
           <div className="text-center padding-spinner ">
             <div className="spinner-border" role="status">
               <br />
@@ -157,19 +163,19 @@ function Detail() {
           </div>
         ) : null}
 
-        {detailMovie != null ? (
+        {findMovie != null ? (
           <div className="row">
             <div className="col-12">
               <div className="card card-body">
-                <img className="p-3" src={detailMovie.poster} alt="" />
+                <img className="p-3" src={findMovie.poster} alt="" />
               </div>
             </div>
             <div className="col-12 px-5">
-              <h3 className="mb-2 h3-detail pt-5">{detailMovie.title}</h3>
+              <h3 className="mb-2 h3-detail pt-5">{findMovie.title}</h3>
               <span className="genre" style={{ textTransform: "capitalize" }}>
                 {detailMovie?.genres?.map((item, key) => (
                   <span>
-                    {detailMovie.genres.length - 1 === key ? item : `${item}, `}
+                    {findMovie.genres.length - 1 === key ? item : `${item}, `}
                   </span>
                 ))}
               </span>
@@ -177,25 +183,25 @@ function Detail() {
               <div className="row mt-5">
                 <div className="col-6">
                   <span className="span-detail">Release date</span>
-                  <p>{detailMovie.release}</p>
+                  <p>{findMovie.release}</p>
                 </div>
                 <div className="col-6 mt-1">
                   <span className="span-detail">Directed by</span>
-                  <p>{detailMovie.director}</p>
+                  <p>{findMovie.director}</p>
                 </div>
               </div>
 
               <div className="row mt-3">
                 <div className="col-6">
                   <span className="span-detail">Duration</span>
-                  <p>{detailMovie.duration}</p>
+                  <p>{findMovie.duration}</p>
                 </div>
                 <div className="col-6 mt-1">
                   <span className="span-detail">Cast</span>
                   <p className="genre">
                     {detailMovie?.cast?.map((item, key) => (
                       <span>
-                        {detailMovie.cast.length - 1 === key
+                        {findMovie.cast.length - 1 === key
                           ? item
                           : `${item}, `}
                       </span>
@@ -213,7 +219,7 @@ function Detail() {
               <div className="row mb-5">
                 <div className="col-12">
                   <h6>Synopsis</h6>
-                  <p className="synopsis-detail">{detailMovie.desc}</p>
+                  <p className="synopsis-detail">{findMovie.desc}</p>
                 </div>
               </div>
             </div>
@@ -254,7 +260,7 @@ function Detail() {
 
       <div className="container">
         <div className="row">
-          {cinemaMovie?.map((item) => (
+          {listCinema.map((item) => (
             <div className="col col-md-4 mt-2">
               <div className="card">
                 
@@ -324,7 +330,7 @@ function Detail() {
                           state: {
                             dateMovie,
                             timeMovie,
-                            titleMovie: detailMovie.title,
+                            titleMovie: findMovie.title,
                             cinemaId: item.id,
                             cinemaName: item.name,
                             cinemaLogo: item.logo,

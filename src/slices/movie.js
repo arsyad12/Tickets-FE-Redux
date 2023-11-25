@@ -25,12 +25,14 @@ export const counterSlice = createSlice({
       state.resultUpcoming = action.payload.resultUpcoming;
     },
     setDetailMovie: (state, action) => {
+        //disini menggunakan spread operator berguna kalo udah ada data sebelumnya bisa disimpan
+        //dan kalo ada data baru tambahin ke data yang udah ada 
       state.detailMovie = [...state.detailMovie, ...action.payload];
     },
     setCinemaMovie: (state, action) => {
       state.cinemaMovie = {...state.cinemaMovie, [action.payload.movieName]:action.payload.data};
     },
-  },
+  }, 
 });
 
 // kita export si setter agar bisa diakses di halaman lain
