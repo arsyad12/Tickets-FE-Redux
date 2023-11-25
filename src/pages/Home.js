@@ -8,6 +8,12 @@ import "../style/signup.css";
 import "../style/signin.css";
 import "../style/resetPass.css";
 
+import * as movieSlices from "../slices/movie"
+
+//untuk menggunakan setter redux dari slices/movie.js, harus make use selector ini
+//kemudian agar semua datanya bisa di store ke semua komponen kita pake dispatch
+import { useSelector,useDispatch } from "react-redux";
+
 import Poster from "../component/poster";
 import Upcoming from "../component/upcoming";
 import Follow from "../component/follow";
@@ -19,6 +25,12 @@ import Header from "../component/header";
 function Home() {
   //mounted adalah proses pemasangan saat aplikasi sedang dijalankan
   //use state adalah variable biasa yang diambil dengan cara destrukturing
+
+  //nah disini kita definiskan variabel state untuk ngambil object dari halaman slice/movie.js
+  const state = useSelector((state)=>state)
+  // abis itu kita definisikan dispatch buat store semua data ke komponen lain
+  const dispatch = useDispatch()
+  console.log(state)
 
   //state untuk mengambil data dari API
   const [resultNowshowing, setResultNowshowing] = React.useState([]);
@@ -36,12 +48,16 @@ function Home() {
       const nowshowingAPI = await  axios.get("https://tickitz-be.onrender.com/arsyad/movie/now-showing") //get data dari  API nowshowing dengan axios
 
         if (nowshowingAPI.status === 200) {
-          setResultNowshowing(nowshowingAPI.data.data); //set result berfungsi untuk memasukan data dari response ke variabel result
+
+          dispatch(movieSlices.setResultNowshowing(nowshowingAPI.data.data)) //cara mengirim respon API ke state di Redux
+          
+          // setResultNowshowing(nowshowingAPI.data.data); //set result berfungsi untuk memasukan data dari response ke variabel result
         }
   
         const upcmomingAPI = await axios.get("https://tickitz-be.onrender.com/arsyad/movie/upcoming") //get data dari  API upcoming dengan axios
          if (upcmomingAPI.status === 200) {
-          setResultUpcoming(upcmomingAPI.data.data); //set result berfungsi untuk memasukan data dari response ke variabel result
+          dispatch(movieSlices.setResultUpcoming(upcmomingAPI.data.data))
+          // setResultUpcoming(upcmomingAPI.data.data); //set result berfungsi untuk memasukan data dari response ke variabel result
         }
 
     } catch (error) {
