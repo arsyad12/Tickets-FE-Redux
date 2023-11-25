@@ -5,12 +5,15 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "../style/dekstop.css";
 import "../style/mobile.css";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Header() {
-  const [profile, setProfile] = React.useState(
-    JSON.parse(localStorage.getItem("profile"))
-  ); //menggambil data yang sudah didapet dari hasil login
-  // console.log(profile); //cek data apa aja yang ada di profile
+
+  const state = useSelector((state)=>state)
+
+  const{user:{resultToken,resultProfile}} = state
+
+ 
   return (
     <>
       <header>
@@ -26,11 +29,11 @@ function Header() {
           </div>
 
           <div className="profile-dropdown d-dekstop">
-            {profile ? ( //jika profile ditemukan di local storage setelah login, maka tampilkan foto dari profil
+            {resultProfile ? ( //jika profile ditemukan di local storage setelah login, maka tampilkan foto dari profil
               <img
                 className="d-dekstop dropdown-toggle"
                 data-bs-toggle="dropdown"
-                src={profile?.photo}
+                src={resultProfile?.photo}
                 alt="profile"
                 style={{
                   width: "40px",
@@ -83,9 +86,9 @@ function Header() {
             <nav className="navbar d-mobile">
               <div className="container-fluid">
                 <div className="profile-dropdown">
-                  {profile ? ( //jika profile ditemukan di local storage setelah login, maka tampilkan foto dari profil
+                  {resultProfile ? ( //jika profile ditemukan di local storage setelah login, maka tampilkan foto dari profil
                     <img
-                      src={profile?.photo}
+                      src={resultProfile?.photo}
                       alt="profile"
                       className="dropdown-toggle"
                       data-bs-toggle="modal"

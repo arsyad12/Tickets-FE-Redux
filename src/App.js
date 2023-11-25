@@ -7,7 +7,8 @@ import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
 import ResetPass from "./pages/ResetPass";
 import ChoseSeat from "./pages/ChoseSeat";
-import { store } from "./store"; //import store redux dari store js {store seperti gudang}
+import { store,persistor } from "./store"; //import store redux dari store js {store seperti gudang}
+import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux"; //import provider  dari react redux sebagai penyedia data
 
 //list page
@@ -47,7 +48,9 @@ function App() {
   return (
     <>
     <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
       <RouterProvider router={router} />
+      </PersistGate>
     </Provider>
     </>
   );
