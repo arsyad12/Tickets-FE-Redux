@@ -7,6 +7,6 @@ export const store = configureStore({
   reducer: {
     movie : movieSlices, 
 //nah nama store nya movie, trus object movieSlices bakal digunain buat
-//controller si setter di movie slice ada setResultNowshowing,setResultUpcoming,setAllResult
+//controller si setter di movie slice ada setResultNowshowing,setResultUpcoming,setAllResult,dll
   },
 })

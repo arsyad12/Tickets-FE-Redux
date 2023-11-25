@@ -8,11 +8,12 @@ import "../style/signup.css";
 import "../style/signin.css";
 import "../style/resetPass.css";
 
-import * as movieSlices from "../slices/movie"
+// import  object movieSlices dari folder slices/movie sebagai controller
+import movie, * as movieSlices from "../slices/movie";
 
 //untuk menggunakan setter redux dari slices/movie.js, harus make use selector ini
 //kemudian agar semua datanya bisa di store ke semua komponen kita pake dispatch
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import Poster from "../component/poster";
 import Upcoming from "../component/upcoming";
@@ -27,56 +28,70 @@ function Home() {
   //use state adalah variable biasa yang diambil dengan cara destrukturing
 
   //nah disini kita definiskan variabel state untuk ngambil object dari halaman slice/movie.js
-  const state = useSelector((state)=>state)
+  const state = useSelector((state) => state);
+  //cek bentuk nilai object yang di kembalikan state
+  console.log(state);
+
+  //kalau state udah ada isinya
+  //destrukturing state dari movie agar bisa dpake data nya
+  const {
+    movie: { resultUpcoming, resultNowshowing },
+  } = state;
+
   // abis itu kita definisikan dispatch buat store semua data ke komponen lain
-  const dispatch = useDispatch()
-  console.log(state)
+  const dispatch = useDispatch();
 
   //state untuk mengambil data dari API
-  const [resultNowshowing, setResultNowshowing] = React.useState([]);
-  const [resultUpcoming, setResultUpcoming] = React.useState([]); // fungsi array kosong disini pada awal saat aplikasi dijalankan result useState akan bernilai array kosong
+  // const [resultNowshowing, setResultNowshowing] = React.useState([]);
+  // const [resultUpcoming, setResultUpcoming] = React.useState([]); // fungsi array kosong disini pada awal saat aplikasi dijalankan result useState akan bernilai array kosong
 
   // state untuk mengambil data dari tanggal di PC
   const date = new Date();
   const month = date.toLocaleString("en", { month: "short" }).toLowerCase();
   const [selectedMonth, setSelectedMonth] = React.useState(month);
 
-
-//penggunaan async await dan trycatch jika mau make lebih dari 1 API
-  const responseHanlder = async()=>{
+  //penggunaan async await dan trycatch jika mau make lebih dari 1 API
+  const responseHanlder = async () => {
     try {
-      const nowshowingAPI = await  axios.get("https://tickitz-be.onrender.com/arsyad/movie/now-showing") //get data dari  API nowshowing dengan axios
+      if (resultNowshowing.length === 0) { 
+  //mencegah agar API tidak di hit ulang saat udah ada data yang disimpan, bisa bikin validasi cek data di state yang ada di destrukturing
+        const nowshowingAPI = await axios.get(
+          "https://tickitz-be.onrender.com/arsyad/movie/now-showing"
+        ); //get data dari  API nowshowing dengan axios
 
         if (nowshowingAPI.status === 200) {
+          dispatch(movieSlices.setResultNowshowing(nowshowingAPI.data.data)); //cara mengirim respon API ke state di slices/movie.js lewat controller movieSlices di store
 
-          dispatch(movieSlices.setResultNowshowing(nowshowingAPI.data.data)) //cara mengirim respon API ke state di Redux
-          
+          //movieSlices berguna seperti controller di store yang mengirim data ke model di slices/movie.js
           // setResultNowshowing(nowshowingAPI.data.data); //set result berfungsi untuk memasukan data dari response ke variabel result
         }
-  
-        const upcmomingAPI = await axios.get("https://tickitz-be.onrender.com/arsyad/movie/upcoming") //get data dari  API upcoming dengan axios
-         if (upcmomingAPI.status === 200) {
-          dispatch(movieSlices.setResultUpcoming(upcmomingAPI.data.data))
+      }
+
+      if (resultUpcoming.length === 0) {
+        const upcmomingAPI = await axios.get(
+          "https://tickitz-be.onrender.com/arsyad/movie/upcoming"
+        ); //get data dari  API upcoming dengan axios
+        if (upcmomingAPI.status === 200) {
+          dispatch(movieSlices.setResultUpcoming(upcmomingAPI.data.data));
           // setResultUpcoming(upcmomingAPI.data.data); //set result berfungsi untuk memasukan data dari response ke variabel result
         }
-
+      }
     } catch (error) {
       console.log(error);
     }
-  }
-
+  };
 
   // sebelum consume API dari folder public/api/movie.json install dulu Axios
 
   React.useEffect(() => {
-   responseHanlder() //menjalankan get API dengan memanggil function response handler
+    responseHanlder(); //menjalankan get API dengan memanggil function response handler
   }, []); //fungsi array kosong untuk mencegah lopping  data dari callback useEffect
 
   return (
     <div className="App">
       {/* section header */}
 
-     <Header/>
+      <Header />
 
       {/* end of section header */}
 
@@ -123,16 +138,14 @@ function Home() {
           </div>
           <hr />
           <div className="d-flex justify-content-center mt-5 d-dekstop">
-            {resultNowshowing
-              .slice(0, 5)
-              .map((item) => (
-                <Poster
-                  posters={item.poster}
-                  name={item.title}
-                  genres={item.genres}
-                  slug={item.slug}
-                />
-              ))}
+            {resultNowshowing.slice(0, 5).map((item) => (
+              <Poster
+                posters={item.poster}
+                name={item.title}
+                genres={item.genres}
+                slug={item.slug}
+              />
+            ))}
 
             {/* filter digunakan untuk filter objek yang nilai isShowing nya true aja item.isShowing === true */}
             {/* slice untuk membatasi jumlah nilai yang diambil */}
@@ -158,16 +171,14 @@ function Home() {
           </div>
           <hr />
           <div className="d-flex justify-content-between mt-5 poster-nowshowing-mobile d-mobile">
-            {resultNowshowing
-              .slice(0, 5)
-              .map((item) => (
-                <Poster
-                  posters={item.poster}
-                  name={item.title}
-                  genres={item.genres}
-                  slug={item.slug}
-                />
-              ))}
+            {resultNowshowing.slice(0, 5).map((item) => (
+              <Poster
+                posters={item.poster}
+                name={item.title}
+                genres={item.genres}
+                slug={item.slug}
+              />
+            ))}
 
             {/* filter digunakan untuk filter objek yang nilai isShowing nya true aja bisa juga ditulis item.isShowing === true */}
             {/* slice untuk membatasi jumlah nilai yang diambil */}
@@ -184,31 +195,64 @@ function Home() {
 
       <main className="container mt-5 d-dekstop" id="upcoming">
         <div className="d-flex justify-content-between d-dekstop">
-          <a href="/#" style={{fontSize:"20px"}}>Upcoming Movies</a>
+          <a href="/#" style={{ fontSize: "20px" }}>
+            Upcoming Movies
+          </a>
           <a className="upcoming" href="/#">
             view all
           </a>
         </div>
 
         <div className="d-flex justify-content-between mt-5 d-dekstop">
-          {["jan", "feb", "mar", "apr", "may", "june", "july", "aug", "sep", "oct", "nov", "des"].map((item) => (
-          <button type="button"className={selectedMonth === item ? "btn btn-primary" : "btn btn-outline-primary"} id="month" onClick={()=>{setSelectedMonth(item.toLowerCase())}}>{item}</button>
-          ))
-          }
-        
+          {[
+            "jan",
+            "feb",
+            "mar",
+            "apr",
+            "may",
+            "june",
+            "july",
+            "aug",
+            "sep",
+            "oct",
+            "nov",
+            "des",
+          ].map((item) => (
+            <button
+              type="button"
+              className={
+                selectedMonth === item
+                  ? "btn btn-primary"
+                  : "btn btn-outline-primary"
+              }
+              id="month"
+              onClick={() => {
+                setSelectedMonth(item.toLowerCase());
+              }}
+            >
+              {item}
+            </button>
+          ))}
         </div>
 
         <div className="d-flex justify-content-center mt-5 d-dekstop">
           {resultUpcoming
-          .filter((item)=> (item.showingMonth === selectedMonth))
-          .slice(0,5)
-          .map((item) => (<Upcoming posters={item.poster} name={item.title} genres={item.genres} slug={item.slug} />))}
+            .filter((item) => item.showingMonth === selectedMonth)
+            .slice(0, 5)
+            .map((item) => (
+              <Upcoming
+                posters={item.poster}
+                name={item.title}
+                genres={item.genres}
+                slug={item.slug}
+              />
+            ))}
         </div>
-       
-        {resultUpcoming
-          .filter((item) => (item.showingMonth === selectedMonth)).length === 0 ? (<p className="text-center mb-5">Movie Not Found</p> ) : null
-        }
 
+        {resultUpcoming.filter((item) => item.showingMonth === selectedMonth)
+          .length === 0 ? (
+          <p className="text-center mb-5">Movie Not Found</p>
+        ) : null}
       </main>
 
       {/* <!--  end of section upcoming dekstop--> */}
@@ -224,24 +268,54 @@ function Home() {
         </div>
 
         <div className="d-flex justify-content-between mt-5 d-mobile month-btn">
-         
-        {["jan", "feb", "mar", "apr", "mey", "june", "july", "aug", "sep", "oct", "nov", "des"].map((item) => (
-          <button type="button"className={selectedMonth === item ? "btn btn-primary" : "btn btn-outline-primary"} id="month" onClick={()=>{setSelectedMonth(item.toLowerCase())}}>{item}</button>
-          ))
-          }
-          
+          {[
+            "jan",
+            "feb",
+            "mar",
+            "apr",
+            "mey",
+            "june",
+            "july",
+            "aug",
+            "sep",
+            "oct",
+            "nov",
+            "des",
+          ].map((item) => (
+            <button
+              type="button"
+              className={
+                selectedMonth === item
+                  ? "btn btn-primary"
+                  : "btn btn-outline-primary"
+              }
+              id="month"
+              onClick={() => {
+                setSelectedMonth(item.toLowerCase());
+              }}
+            >
+              {item}
+            </button>
+          ))}
         </div>
 
         <div className="d-flex justify-content-between mt-5 d-mobile poster-upcoming-mobile">
           {resultUpcoming
-          .filter((item) => (item.showingMonth=== selectedMonth))
-          .slice(0,5)
-          .map((item) => (<Upcoming posters={item.poster} name={item.title} genres={item.genres} slug={item.slug}/>))
-          }
+            .filter((item) => item.showingMonth === selectedMonth)
+            .slice(0, 5)
+            .map((item) => (
+              <Upcoming
+                posters={item.poster}
+                name={item.title}
+                genres={item.genres}
+                slug={item.slug}
+              />
+            ))}
         </div>
-        {resultUpcoming
-          .filter((item) => (item.showingMonth === selectedMonth)).length === 0 ? (<p >Movie Not Found</p> ) : null
-        }
+        {resultUpcoming.filter((item) => item.showingMonth === selectedMonth)
+          .length === 0 ? (
+          <p>Movie Not Found</p>
+        ) : null}
       </main>
 
       {/* <!-- end of upcoming mobile --> */}
@@ -334,10 +408,19 @@ function Home() {
 
         <div className="col-3 d-dekstop">
           <h6 className="text-start">Follow us</h6>
-          <Follow icon ="/img/sponsor/eva_twitter-outline.svg" text="Tickitz Cinema Id"/>
-          <Follow icon ="/img/sponsor/bx_bxl-instagram.svg" text="Tickitz.id"/>
-          <Follow icon ="/img/sponsor/eva_facebook-outline.svg" text="Tickitz.id"/>
-          <Follow icon ="/img/sponsor/feather_youtube.svg" text="Tickitz Cinema Id"/>
+          <Follow
+            icon="/img/sponsor/eva_twitter-outline.svg"
+            text="Tickitz Cinema Id"
+          />
+          <Follow icon="/img/sponsor/bx_bxl-instagram.svg" text="Tickitz.id" />
+          <Follow
+            icon="/img/sponsor/eva_facebook-outline.svg"
+            text="Tickitz.id"
+          />
+          <Follow
+            icon="/img/sponsor/feather_youtube.svg"
+            text="Tickitz Cinema Id"
+          />
         </div>
       </footer>
 
@@ -399,10 +482,19 @@ function Home() {
           <div class="d-flex justify-content-center">
             <h6>Follow us</h6>
           </div>
-          <Follow icon ="/img/sponsor/eva_twitter-outline.svg" text="Tickitz Cinema Id"/>
-          <Follow icon ="/img/sponsor/bx_bxl-instagram.svg" text="Tickitz.id"/>
-          <Follow icon ="/img/sponsor/eva_facebook-outline.svg" text="Tickitz.id"/>
-          <Follow icon ="/img/sponsor/feather_youtube.svg" text="Tickitz Cinema Id"/>
+          <Follow
+            icon="/img/sponsor/eva_twitter-outline.svg"
+            text="Tickitz Cinema Id"
+          />
+          <Follow icon="/img/sponsor/bx_bxl-instagram.svg" text="Tickitz.id" />
+          <Follow
+            icon="/img/sponsor/eva_facebook-outline.svg"
+            text="Tickitz.id"
+          />
+          <Follow
+            icon="/img/sponsor/feather_youtube.svg"
+            text="Tickitz Cinema Id"
+          />
         </div>
       </footer>
 

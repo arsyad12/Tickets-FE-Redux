@@ -4,11 +4,27 @@ import Footer from "../component/footer";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import movie, * as movieSlices from "../slices/movie"
+import { useSelector,useDispatch } from "react-redux";
+
+
 function Detail() {
+
+  const state = useSelector((state)=>state)
+  console.log(state)
+
+  const dispatch = useDispatch()
+
+  const{movie:{detailMovie,cinemaMovie}} = state
+
+
+  // console.log(detailMovie)
+  // console.log(cinemaMovie)
+
   const navigate = useNavigate();
   const { slug } = useParams(); //request parameter
-  const [detailMovie, setdetailMovie] = React.useState(null);
-  const [cinemaMovie, setCinemaMovie] = React.useState([]);
+  // const [detailMovie, setdetailMovie] = React.useState(null);
+  // const [cinemaMovie, setCinemaMovie] = React.useState([]);
 
   const [dateMovie, setDateMovie] = useState(null);
   const [timeMovie, setTimeMovie] = useState(null);
@@ -20,7 +36,12 @@ function Detail() {
       ); //get data API dari axios
       //jika ada data yang didapet dari API maka akan masuk ke response
       if (detailMovieAPI.data.data.length > 0) {
-        setdetailMovie(detailMovieAPI.data.data[0]); //setdetailMovie berfungsi untuk memasukan data dari response ke variabel detailMovie
+
+      // console.log(detailMovieAPI.data.data[0])
+
+        dispatch(movieSlices.setDetailMovie(detailMovieAPI.data.data[0]))
+
+        // setdetailMovie(detailMovieAPI.data.data[0]); //setdetailMovie berfungsi untuk memasukan data dari response ke variabel detailMovie
         //kita ga pake conditional lagi untuk mencocokan slug karena sudah ada dari API nya
       }
       const cinemaAPI = await axios.get(
@@ -28,10 +49,11 @@ function Detail() {
       ); //get data API dari axios
       //jika ada data yang didapet dari API maka akan masuk ke response
       if (cinemaAPI.data.data.length > 0) {
-        setCinemaMovie(cinemaAPI.data.data); //setCinemaMovie berfungsi untuk memasukan data dari response ke variabel cinemaMovie
+        dispatch(movieSlices.setCinemaMovie(cinemaAPI.data.data))
+        // setCinemaMovie(cinemaAPI.data.data); //setCinemaMovie berfungsi untuk memasukan data dari response ke variabel cinemaMovie
       }
-
-      console.log(cinemaMovie);
+      // console.log(detailMovie)
+      // console.log(cinemaMovie);
     } catch (error) {
       console.log(error);
     }
@@ -69,7 +91,7 @@ function Detail() {
             <div className="col-9 px-5">
               <h3 className="mb-2 h3-detail">{detailMovie.title}</h3>
               <span className="genre" style={{ textTransform: "capitalize" }}>
-                {detailMovie.genres.map((item, key) => (
+                {detailMovie?.genres?.map((item, key) => (
                   <span>
                     {detailMovie.genres.length - 1 === key ? item : `${item}, `}
                   </span>
@@ -95,7 +117,7 @@ function Detail() {
                 <div className="col-6 mt-1">
                   <span className="span-detail">Cast</span>
                   <p className="genre">
-                    {detailMovie.cast.map((item, key) => (
+                    {detailMovie?.cast?.map((item, key) => (
                       <span>
                         {detailMovie.cast.length - 1 === key
                           ? item
@@ -145,7 +167,7 @@ function Detail() {
             <div className="col-12 px-5">
               <h3 className="mb-2 h3-detail pt-5">{detailMovie.title}</h3>
               <span className="genre" style={{ textTransform: "capitalize" }}>
-                {detailMovie.genres.map((item, key) => (
+                {detailMovie?.genres?.map((item, key) => (
                   <span>
                     {detailMovie.genres.length - 1 === key ? item : `${item}, `}
                   </span>
@@ -171,7 +193,7 @@ function Detail() {
                 <div className="col-6 mt-1">
                   <span className="span-detail">Cast</span>
                   <p className="genre">
-                    {detailMovie.cast.map((item, key) => (
+                    {detailMovie?.cast?.map((item, key) => (
                       <span>
                         {detailMovie.cast.length - 1 === key
                           ? item
@@ -232,7 +254,7 @@ function Detail() {
 
       <div className="container">
         <div className="row">
-          {cinemaMovie.map((item) => (
+          {cinemaMovie?.map((item) => (
             <div className="col col-md-4 mt-2">
               <div className="card">
                 
