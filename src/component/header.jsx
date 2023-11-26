@@ -5,16 +5,22 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "../style/dekstop.css";
 import "../style/mobile.css";
 import { Link } from "react-router-dom";
+//untuk mengambil state dari redux
 import { useSelector } from "react-redux";
-import  {persistor} from '../store'
+//import persistoruntuk ngambil data dari localstorage
+//kita akan buat fitur logout dengan hapus data persistor di localstorage
+import { persistor } from "../store";
 
 function Header() {
+  //mendefinisikan variabel state untuk ngambil object state dari file di folder slices
+  const state = useSelector((state) => state);
 
-  const state = useSelector((state)=>state)
+  //kalau state udah ada isinya
+  //destrukturing state yang mau diambil datanya
+  const {
+    user: { resultToken, resultProfile },
+  } = state;
 
-  const{user:{resultToken,resultProfile}} = state
-
- 
   return (
     <>
       <header>
@@ -30,7 +36,9 @@ function Header() {
           </div>
 
           <div className="profile-dropdown d-dekstop">
-            {resultProfile ? ( //jika profile ditemukan di local storage setelah login, maka tampilkan foto dari profil
+            {/* //jika profile ditemukan di redux di local storage setelah login, maka tampilkan foto dari profil */}
+
+            {resultProfile ? (
               <img
                 className="d-dekstop dropdown-toggle"
                 data-bs-toggle="dropdown"
@@ -71,7 +79,8 @@ function Header() {
                 <a
                   className="dropdown-item"
                   onClick={() => {
-                    persistor.purge()
+//purge adalah funtion yang berguna untuk menghapus data persistor yang ada di localstorage
+                    persistor.purge();
                     window.location.href = "/";
                   }}
                 >
@@ -87,7 +96,10 @@ function Header() {
             <nav className="navbar d-mobile">
               <div className="container-fluid">
                 <div className="profile-dropdown">
-                  {resultProfile ? ( //jika profile ditemukan di local storage setelah login, maka tampilkan foto dari profil
+
+{/* //jika profile ditemukan di redux di local storage setelah login, maka tampilkan foto dari profil */}
+
+                  {resultProfile ? (
                     <img
                       src={resultProfile?.photo}
                       alt="profile"
@@ -138,7 +150,6 @@ function Header() {
                         </div>
                         <div class="modal-body row ">
                           <div>
-                          
                             <button
                               type="button"
                               class="btn btn-secondary mt-2"
@@ -149,7 +160,6 @@ function Header() {
                             >
                               Home
                             </button>
-                            
                           </div>
                           <div>
                             <button
@@ -161,7 +171,6 @@ function Header() {
                             </button>
                           </div>
                           <div>
-           
                             <button
                               type="button"
                               class="btn btn-secondary mt-2"
@@ -172,7 +181,6 @@ function Header() {
                             >
                               Reset Password
                             </button>
-                  
                           </div>
                           <div>
                             <button
@@ -180,7 +188,8 @@ function Header() {
                               class="btn btn-danger mt-2"
                               style={{ width: "50%" }}
                               onClick={() => {
-                                persistor.purge()
+//purge adalah funtion yang berguna untuk menghapus data persistor yang ada di localstorage
+                                persistor.purge();
                                 window.location.href = "/";
                               }}
                             >
@@ -211,14 +220,14 @@ function Header() {
               </a>
             </li>
             <li className="nav-item d-flex justify-content-center">
-            <Link to="signup">
-              <button
-                type="button"
-                className="btn btn-primary mt-3"
-                id="signup"
-              >
-                Sign Up
-              </button>
+              <Link to="signup">
+                <button
+                  type="button"
+                  className="btn btn-primary mt-3"
+                  id="signup"
+                >
+                  Sign Up
+                </button>
               </Link>
             </li>
           </ul>

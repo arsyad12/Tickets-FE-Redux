@@ -2,14 +2,22 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
+//untuk menggunakan setter redux dari file di folder slices, harus make use selector ini
+//kemudian agar semua datanya bisa di store ke semua komponen kita pake dispatch
 import { useSelector, useDispatch } from "react-redux";
+
+// import  object userSlices dari folder slices/user sebagai controller
 import user, * as userSlices from "../slices/user";
 
 function Signin() {
-  const state = useSelector((state) => state);
 
+  //mendefinisikan variabel state untuk ngambil object state dari file di folder slices
+  const state = useSelector((state) => state);
+  
+  //definisikan dispatch buat distribusi semua data ke komponen lain
   const dispatch = useDispatch();
 
+  //destrukturing biject state dari user agar bisa dpake data nya
   const { user: resultToken, resultProfile } = state;
 
   //state untuk ambil data yang diabmbil dari form pake event onchange
@@ -40,12 +48,17 @@ function Signin() {
         password: password,
       })
       .then((res) => {
-        console.log(res); //bisa liat urutan objectnya dengan console dulu
-        //mengambil token yang dikirim API
-        const token = res.data?.data?.token; //? tanda tanya disini adalah chaining operation, jika respon nya ada maka akan diambil sesuai urutan object
-        //mengambil profile yang dikirim API
+        console.log(res); 
+//bisa liat urutan objectnya dengan console dulu
+//mengambil token yang dikirim API
+        const token = res.data?.data?.token; 
+//? tanda tanya disini adalah chaining operation, jika respon nya ada maka akan diambil sesuai urutan object
+//mengambil profile yang dikirim API
         const profile = res.data?.data?.result;
-        //memasukan token dan data profile ke localstoreage
+//memasukan token dan data profile ke localstoreage
+
+//cara mengirim respon API ke state di slices/user.js lewat controller userSlices di store
+//movieSlices berguna seperti controller di store yang mengirim data ke model di slices/movie.js
 
         dispatch(userSlices.setResultToken(token));
         dispatch(userSlices.setResultProfile(profile));

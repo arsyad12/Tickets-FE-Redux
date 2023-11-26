@@ -1,5 +1,16 @@
 import React from "react";
+
+//create router brwoser untuk membuat root setiap page
+//router provider untuk mengirim data dari provider ke semua page
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+//import store redux dari store js {store seperti gudang}
+//import persistor untuk nymimpan data store ke localstorage
+import { store, persistor } from "./store";
+//PersistGate untuk menunda rendering UI aplikasi
+//sampe integrasi data API selesai dan disimpan ke redux.
+import { PersistGate } from "redux-persist/integration/react";
+//import provider  dari react redux sebagai penyedia data
+import { Provider } from "react-redux";
 
 import Home from "./pages/Home";
 import Detail from "./pages/Detail";
@@ -7,9 +18,6 @@ import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
 import ResetPass from "./pages/ResetPass";
 import ChoseSeat from "./pages/ChoseSeat";
-import { store,persistor } from "./store"; //import store redux dari store js {store seperti gudang}
-import { PersistGate } from "redux-persist/integration/react";
-import { Provider } from "react-redux"; //import provider  dari react redux sebagai penyedia data
 
 //list page
 const router = createBrowserRouter([
@@ -47,11 +55,14 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-    <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-      <RouterProvider router={router} />
-      </PersistGate>
-    </Provider>
+      {/* jadi provider menyediakan data dari store */}
+      <Provider store={store}>
+        {/* kemudian persist gate bakal integrasi data store ke localstorage */}
+        <PersistGate loading={null} persistor={persistor}>
+          {/* dan akhirnya semua data di distribusi ke semua page */}
+          <RouterProvider router={router} />
+        </PersistGate>
+      </Provider>
     </>
   );
 }

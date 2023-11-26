@@ -38,7 +38,7 @@ function Home() {
     movie: { resultUpcoming, resultNowshowing },
   } = state;
 
-  // abis itu kita definisikan dispatch buat store semua data ke komponen lain
+  // abis itu kita definisikan dispatch buat distribusi semua data ke komponen lain
   const dispatch = useDispatch();
 
   //state untuk mengambil data dari API
@@ -60,8 +60,8 @@ function Home() {
         ); //get data dari  API nowshowing dengan axios
 
         if (nowshowingAPI.status === 200) {
-          dispatch(movieSlices.setResultNowshowing(nowshowingAPI.data.data)); //cara mengirim respon API ke state di slices/movie.js lewat controller movieSlices di store
-
+          dispatch(movieSlices.setResultNowshowing(nowshowingAPI.data.data)); 
+          //cara mengirim respon API ke state di slices/movie.js lewat controller movieSlices di store
           //movieSlices berguna seperti controller di store yang mengirim data ke model di slices/movie.js
           // setResultNowshowing(nowshowingAPI.data.data); //set result berfungsi untuk memasukan data dari response ke variabel result
         }
