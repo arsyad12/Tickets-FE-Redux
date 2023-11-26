@@ -52,9 +52,8 @@ function Signin() {
 
         setSucces(true);
 
-        // setTimeout(() => {
-        //   window.location.reload()
-        // },2000);
+        window.location.href = "/";
+        
       })
       .catch((err) => {
         setSucces(false);

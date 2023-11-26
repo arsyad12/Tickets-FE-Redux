@@ -6,6 +6,7 @@ import "../style/dekstop.css";
 import "../style/mobile.css";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import  {persistor} from '../store'
 
 function Header() {
 
@@ -70,7 +71,7 @@ function Header() {
                 <a
                   className="dropdown-item"
                   onClick={() => {
-                    localStorage.removeItem("profile");
+                    persistor.purge()
                     window.location.href = "/";
                   }}
                 >
@@ -179,7 +180,7 @@ function Header() {
                               class="btn btn-danger mt-2"
                               style={{ width: "50%" }}
                               onClick={() => {
-                                localStorage.removeItem("profile");
+                                persistor.purge()
                                 window.location.href = "/";
                               }}
                             >
@@ -210,6 +211,7 @@ function Header() {
               </a>
             </li>
             <li className="nav-item d-flex justify-content-center">
+            <Link to="signup">
               <button
                 type="button"
                 className="btn btn-primary mt-3"
@@ -217,6 +219,7 @@ function Header() {
               >
                 Sign Up
               </button>
+              </Link>
             </li>
           </ul>
         </div>
