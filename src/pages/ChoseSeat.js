@@ -12,6 +12,8 @@ import { useParams, useLocation, useNavigate } from "react-router";
 
 import moment from "moment/moment";
 
+import { useSelector } from "react-redux";
+
 function RowSeat({ position, selectedSeat, setSelectedSeat, bookedSeat }) {
   const getSeatColor = (key) => {
     if (bookedSeat?.find((_item) => _item === `${position}${key}`)) {
@@ -186,6 +188,11 @@ function ChoseSeat() {
     },
   } = useLocation();
 
+  const state = useSelector((state)=>state)
+
+  const {user:{resultToken,resultProfile}} = state
+
+
   const [fullDate, setFullDate] = React.useState(null);
   const [setTime, setFullTime] = React.useState(null);
   //booking
@@ -231,7 +238,7 @@ function ChoseSeat() {
         },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${resultToken}`,
           },
         }
       );
@@ -244,7 +251,7 @@ function ChoseSeat() {
           {},
           {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              Authorization: `Bearer ${resultToken}`,
             },
           }
           

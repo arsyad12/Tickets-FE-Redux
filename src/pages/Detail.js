@@ -18,6 +18,7 @@ function Detail() {
 //yang didalam nya semua object state slice/movie.js
   const state = useSelector((state)=>state)
   const{movie:{detailMovie,cinemaMovie}} = state
+  const{user:{resultToken,resultProfile}} =state
 
 //biasanya orang kalo liat film kan bakal buka banyak detail nya
 //jadi supaya detail film yang di tampilin sesuai, kita buat variable
@@ -357,7 +358,7 @@ if (cinemaAPI.data.data.length > 0) {
                           },
                         });
                     
-                 if (!localStorage.getItem("token") && !localStorage.getItem("profile")) {
+                 if (!resultToken && !resultProfile) {
                   navigate("/")
                  }
                     

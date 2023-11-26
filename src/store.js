@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 //import redux persistor untuk nyimpan data ke local storage
-import { persistStore, persistReducer } from 'redux-persist'
+import { persistStore, persistReducer, PURGE } from 'redux-persist'
 // koneksi ke defaults to localStorage for web
 import storage from 'redux-persist/lib/storage' 
 //import data list state movie dari slice/movie.js ke store
@@ -24,7 +24,13 @@ const reducers = combineReducers({
   export const persist = persistReducer(persistConfig, reducers)
   
   export const store = configureStore({
-      reducer : persist
+      reducer : persist,
+      middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [PURGE]
+      }
+    })
     })
     
 
