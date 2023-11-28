@@ -317,7 +317,7 @@ if (cinemaAPI.data.data.length > 0) {
                   <span className="mute-text" style={{ fontSize: "12px" }}>
                     {item.movieStart.map((nesteditem) => (
                       <span
-                        style={{ textTransform: "capitalize", margin: "13px" }}
+                        style={{ textTransform: "capitalize", margin: "12px" }}
                       >
                         {nesteditem} WIB
                       </span>
