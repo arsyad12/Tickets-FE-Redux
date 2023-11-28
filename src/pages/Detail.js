@@ -278,7 +278,7 @@ if (cinemaAPI.data.data.length > 0) {
       </div>
 
       <div className="container">
-        <div className="row">
+        <div className="row card-size">
           {listCinema.map((item) => (
             <div className="col col-md-4 mt-2">
               <div className="card">

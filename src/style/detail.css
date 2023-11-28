@@ -64,3 +64,7 @@
     border-radius: 5px;
 
   }
+
+  .card-size{
+    width: 105%;
+  }
