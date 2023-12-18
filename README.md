@@ -78,7 +78,7 @@ npm run dev
 
 ## Demo App
 
-Documentation files are provided in the [Demo](https://tickets-web-app.vercel.app/) fol
+Documentation files are provided in the [Demo](https://tickets-web-app.vercel.app/)
 
 ## Related Project
 
