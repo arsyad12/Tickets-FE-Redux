@@ -73,6 +73,23 @@ npm run start
 npm run dev
 ```
 
+## ScreenShoot Project
+| Home Page | Home Page After Login|
+| :---: | :---: |
+|![Home Page](https://i.ibb.co/85NL7kW/scrnli-12-19-2023-12-44-55-PM.png)|![Register Page](https://i.ibb.co/H79syXf/scrnli-12-19-2023-12-52-19-PM.png)|
+
+
+| Register Page | Login Page |
+| :---: | :---: |
+|![My Recipe Page](https://i.ibb.co/7KvKmqY/scrnli-12-19-2023-12-46-01-PM.png)|![Bookmark Page](https://i.ibb.co/Jj5MQxc/scrnli-12-19-2023-12-47-30-PM.png)|
+
+
+| Detail Movie | Booking Seat |
+| :---: | :---: |
+|![My Recipe Page](https://i.ibb.co/cYVYbTK/screencapture-tickets-web-app-vercel-app-detail-killers-of-the-flower-moon-2023-12-19-12-57-07.png)|![Bookmark Page](https://i.ibb.co/7VsQf3g/screencapture-tickets-web-app-vercel-app-chose-Seat-killers-of-the-flower-moon-2023-12-19-12-56-46.png)|
+
+
+
 
 ## Demo App
 
